@@ -1,0 +1,25 @@
+{
+  "name": "ps-ractive-router",
+  "version": "1.0.0",
+  "description": "A small router module to use with RactiveJS",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "js",
+    "ractive",
+    "ractivejs",
+    "router"
+  ],
+  "author": "PaquitoSoft",
+  "license": "MIT",
+  "dependencies": {
+    "object-assign": "^4.0.1",
+    "page": "^1.6.3",
+    "ractive": "^0.7.3"
+  },
+  "devDependencies": {
+    "webpack": "^1.12.0"
+  }
+}
