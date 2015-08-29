@@ -29,22 +29,19 @@ module.exports.extend = function createApp(options) {
 		data: {
 			componentName: 'EmptyPage'
 		},
-		oninit: function _onInit() {
-			if (appProperties.routesConfiguration && appProperties.routesConfiguration.length) {
+		oncomplete: function _onComplete() {
+			if (appProperties.routesConfiguration && Object.keys(appProperties.routesConfiguration).length) {
 				routerManager.init(appProperties.routesConfiguration, this.onNavigation.bind(this));
 			} else {
 				console.warn('Router has not been started as you did not provide its configuration.');
 			}
-			
-			console.log('App::oninit# Application initialized!');
 		},
 		onNavigation: function _onNavigation(error, navigationContext) {
-			console.log('APP::onNavigation# Navigating to:', navigationContext.pageName, 'with context:', navigationContext);
-
 			if (error) {
 				console.warn('App::onNavigation# Error navigating:', error);
 				this.showError(error.displayMessage || error.message);
 			} else {
+				console.log('APP::onNavigation# Navigating to:', navigationContext.pageName, 'with context:', navigationContext);
 				this.set({
 					req: {
 						params: navigationContext.params,
