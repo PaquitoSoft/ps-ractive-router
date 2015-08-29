@@ -16,10 +16,10 @@
   "license": "MIT",
   "dependencies": {
     "object-assign": "^4.0.1",
-    "page": "^1.6.3",
-    "ractive": "^0.7.3"
+    "page": "^1.6.3"
   },
   "devDependencies": {
-    "webpack": "^1.12.0"
+    "webpack": "^1.12.0",
+    "ractive": "^0.7.3"
   }
 }
