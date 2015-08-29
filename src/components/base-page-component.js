@@ -17,11 +17,12 @@ module.exports.extend = function createPageComponent(options) {
 
 	// Observe 'req' property which will be updated when the route
 	// controller wants to update this page view
-	pageProperties.onconfig = function _onConfig() {
+	pageProperties.onconfig = function _onConfiguration() {
 		var self = this;
 		console.log('BasePageComponent::onConfig# Configuring page component:', pageProperties.name);
 		
 		this.observe('req', function(request) {
+			console.log('BasePageComponent::onConfig# We have a new request...');
 			pageProperties.onRequestDone.call(this, request);
 		});
 
