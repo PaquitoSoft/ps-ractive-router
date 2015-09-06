@@ -4,16 +4,16 @@ function navigationHandler(routeHandler, onNavigation) {
 	return function(context/*, next*/) {
 		routeHandler(context, function(error, PageComponent, data) {
 			var _err;
-			
+
 			if (error || !PageComponent) {
 				_err = error || new Error('No PageComponent provided to render for current URL: ' + context.path);
 				onNavigation(_err);
 			} else {
 				context.pageName = PageComponent._name;
 				context.state = data || {};
-				onNavigation(null, context);	
+				onNavigation(null, context);
 			}
-			
+
 		});
 	};
 }
@@ -33,4 +33,8 @@ module.exports.init = function _init(routes, onNavigation, options) {
 
 module.exports.navTo = function _navTo(url, state) {
 	pagejs.show(url, state);
+}
+
+module.exports.reset = function _reset() {
+	pagejs.callbacks = [];
 }
