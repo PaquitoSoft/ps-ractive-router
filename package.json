@@ -4,7 +4,7 @@
   "description": "A small router module to use with RactiveJS",
   "main": "src/index.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start karma.conf.js",
+    "test": "./node_modules/karma/bin/karma start karma.conf.js --log-level debug",
     "postinstall": "node scripts/post-install.js"
   },
   "keywords": [
