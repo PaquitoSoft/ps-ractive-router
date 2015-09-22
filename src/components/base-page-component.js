@@ -2,17 +2,24 @@ var Ractive = require('ractive'),
 	objectAssign = require('object-assign'),
 	routerManager = require('../router-manager');
 
+var noop = function() {};
+
 module.exports.extend = function createPageComponent(options) {
 	var pageProperties = objectAssign({
 			template: '',
 			events: {},
-			onRequestDone: function() {}
+			onRequestDone: noop
 		}, options),
-		_onConfig = function() {},
+		_onConfig = noop,
+		_onComplete = noop,
 		PageComponent;
 
 	if (pageProperties.onconfig) {
 		_onConfig = pageProperties.onconfig;
+	}
+
+	if (pageProperties.oncomplete) {
+		_onComplete = pageProperties.oncomplete;
 	}
 
 	// Observe 'req' property which will be updated when the route
@@ -22,8 +29,11 @@ module.exports.extend = function createPageComponent(options) {
 		// console.log('BasePageComponent::onConfig# Configuring page component:', pageProperties.name);
 
 		this.observe('req', function(request) {
-			// console.log('BasePageComponent::onConfig# We have a new request...');
-			pageProperties.onRequestDone.call(this, request);
+			// console.log('BasePageComponent::onConfig# We have a new request...', request);
+			// We just fire the callback when routing to this page
+			if (pageProperties.name === request.pageName) {
+				pageProperties.onRequestDone.call(this, request);
+			}
 		});
 
 		Object.keys(pageProperties.events).forEach(function(key) {
@@ -33,6 +43,11 @@ module.exports.extend = function createPageComponent(options) {
 		this.navTo = routerManager.navTo;
 
 		_onConfig.call(this);
+	}
+
+	pageProperties.oncomplete = function() {
+		this.fire('PageNavigationDone');
+		_onComplete.call(this);
 	}
 
 	PageComponent = Ractive.extend(pageProperties);

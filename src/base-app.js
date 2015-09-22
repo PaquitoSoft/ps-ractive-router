@@ -3,6 +3,8 @@ var Ractive = require('ractive'),
 	routerManager = require('./router-manager'),
 	RouterComponent = require('./components/router-component');
 
+var noop = function() {};
+
 module.exports.extend = function createApp(options) {
 	var defaults = {
 			el: '#app',
@@ -12,6 +14,11 @@ module.exports.extend = function createApp(options) {
 			routesConfiguration: {},
 
 			template: '<div>Missing application template</div>',
+
+			onBeforeNavigation: noop,
+			onNavigationDone: noop,
+
+			pagejsConfig: {},
 
 			showError: function _defaultErrorHandler(message) {
 				console.warn('You should implement this function to show this routing error:', message);
@@ -29,7 +36,11 @@ module.exports.extend = function createApp(options) {
 
 	appProperties.oncomplete = function _onComplete() {
 		if (appProperties.routesConfiguration && Object.keys(appProperties.routesConfiguration).length) {
-			routerManager.init(appProperties.routesConfiguration, this.onNavigation.bind(this));
+			routerManager.init(appProperties.routesConfiguration,
+				this.onNavigation.bind(this),
+				objectAssign({
+					onBeforeNavigation: appProperties.onBeforeNavigation
+				}, appProperties.pagejsConfig));
 		} else {
 			console.warn('Router has not been started as you did not provide its configuration.');
 		}
@@ -37,6 +48,10 @@ module.exports.extend = function createApp(options) {
 		if (originalOnComplete) {
 			originalOnComplete.call(this);
 		}
+
+		this.on('*.PageNavigationDone', function() {
+			appProperties.onNavigationDone.call(this);
+		}.bind(this));
 	};
 
 	appProperties.onNavigation = function _onNavigation(error, navigationContext) {
@@ -47,7 +62,8 @@ module.exports.extend = function createApp(options) {
 			this.set({
 				req: {
 					params: navigationContext.params,
-					locals: navigationContext.state
+					locals: navigationContext.state,
+					pageName: navigationContext.pageName
 				},
 				componentName: navigationContext.pageName
 			});
