@@ -39,7 +39,7 @@ module.exports.extend = function createApp(options) {
 			routerManager.init(appProperties.routesConfiguration,
 				this.onNavigation.bind(this),
 				objectAssign({
-					onBeforeNavigation: appProperties.onBeforeNavigation
+					onBeforeNavigation: appProperties.onBeforeNavigation.bind(this)
 				}, appProperties.pagejsConfig));
 		} else {
 			console.warn('Router has not been started as you did not provide its configuration.');

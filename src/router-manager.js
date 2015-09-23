@@ -3,7 +3,7 @@ var pagejs = require('page'),
 
 function navigationHandler(routeHandler, onNavigation, onBeforeNavigation) {
 	return function(context/*, next*/) {
-		onBeforeNavigation.call(null, context);
+		onBeforeNavigation(context);
 		routeHandler(context, function(error, PageComponent, data) {
 			var _err;
 
