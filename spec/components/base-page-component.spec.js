@@ -33,6 +33,13 @@ describe('Base page component', function() {
 					openUserPopup: function() {
 						done();
 					}
+				},
+				data: function() {
+					return {
+						req: {
+							pageName: 'ProfilePage'
+						}
+					}
 				}
 			}),
 			instance = new Page();
@@ -40,7 +47,7 @@ describe('Base page component', function() {
 		instance.fire('openUserPopup');
 	});
 
-	it('Should call provided callback when navigating', function() {
+	it('Should call provided callback when navigating to the current page', function() {
 		var onRequestDoneSpy = jasmine.createSpy('onRequestDone'),
 			Page = BasePage.extend({
 				name: 'AboutPage',
@@ -52,24 +59,48 @@ describe('Base page component', function() {
 				components: {
 					AboutPage: Page
 				},
-				data: { req: {} }
+				data: { req: { pageName: 'AboutPage' } }
 			}),
 			reqData = {
+				pageName: 'AboutPage',
 				params: { foo: 'bar' },
 				locals: { bar: 'foo'}
 			};
 
 		ractive.set('req', reqData);
 
+		// When instantiating page component, Ractive will fire the observe callback
+		// Then, this callback will be called again aget ractive.set
 		expect(onRequestDoneSpy.calls.count()).toEqual(2);
 		expect(onRequestDoneSpy.calls.argsFor(1)[0]).toEqual(reqData);
+	});
+
+	it('Should NOT call provided callback when navigating to the current page', function() {
+		var onRequestDoneSpy = jasmine.createSpy('onRequestDone'),
+			Page = BasePage.extend({
+				name: 'HelpPage',
+				template: '<div><h2>Help page</h2></div>',
+				onRequestDone: onRequestDoneSpy
+			}),
+			ractive = new Ractive({
+				template: '<div><HelpPage/></div>',
+				components: {
+					HelpPage: Page
+				},
+				data: { req: { pageName: 'DummyPage' } }
+			});
+
+		ractive.set('req', { pageName: 'DummyPage' });
+
+		expect(onRequestDoneSpy.calls.count()).toEqual(0);
 	});
 
 	it('Should allow onconfig callback to be overloaded', function() {
 		var onConfigSpy = jasmine.createSpy('onconfig'),
 			Page = BasePage.extend({
 				name: 'OrdersPage',
-				onconfig: onConfigSpy
+				onconfig: onConfigSpy,
+				data: { req: { pageName: 'OrdersPage' } }
 			}),
 			instance = new Page();
 
