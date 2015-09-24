@@ -153,4 +153,8 @@ describe('BaseApp', function() {
 		expect(req.params.name).toEqual('bar');
 		expect(req.locals.foo).toEqual('baz');
 	});
+
+	it('Should call onBeforeNavigation callback');
+	it('Should call onNavigationDone callback');
+	
 });
