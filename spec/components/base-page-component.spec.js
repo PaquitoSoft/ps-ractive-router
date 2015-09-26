@@ -87,7 +87,9 @@ describe('Base page component', function() {
 				components: {
 					HelpPage: Page
 				},
-				data: { req: { pageName: 'DummyPage' } }
+				data: function() {
+					return { req: { pageName: 'DummyPage' } };
+				}
 			});
 
 		ractive.set('req', { pageName: 'DummyPage' });
@@ -100,11 +102,29 @@ describe('Base page component', function() {
 			Page = BasePage.extend({
 				name: 'OrdersPage',
 				onconfig: onConfigSpy,
-				data: { req: { pageName: 'OrdersPage' } }
+				data: function() {
+					return { req: { pageName: 'OrdersPage' } };
+				}
 			}),
 			instance = new Page();
 
 		expect(instance.navTo).toBeDefined();
 		expect(onConfigSpy).toHaveBeenCalled();
+	});
+
+	it('Should allow oncomplete callback to be overloaded', function() {
+		var onCompleteSpy = jasmine.createSpy('oncomplete'),
+			Page = BasePage.extend({
+				name: 'ProductsPage',
+				oncomplete: onCompleteSpy,
+				data: function() {
+					return { req: { pageName: 'ProductsPage' } };
+				}
+			}),
+			instance = new Page();
+
+		instance.oncomplete();
+		expect(instance.navTo).toBeDefined();
+		expect(onCompleteSpy).toHaveBeenCalled();
 	});
 });

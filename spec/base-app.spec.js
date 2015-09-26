@@ -154,7 +154,35 @@ describe('BaseApp', function() {
 		expect(req.locals.foo).toEqual('baz');
 	});
 
-	it('Should call onBeforeNavigation callback');
-	it('Should call onNavigationDone callback');
-	
+	it('Should call navigation callbacks', function(done) {
+		var options = {
+				el: 'body',
+				template: '<div class="main-content"><Router /></div>',
+				routesConfiguration: {
+					'/bar': function(context, next) {
+						var ByePage = BasePage.extend({
+							name: 'ByePage',
+							template: '<p>Hello</p>'
+						});
+						next(null, ByePage, { foo: 'baz' });
+					}
+				},
+				onBeforeNavigation: function() {
+					expect(this.get('dummy')).toEqual('Rollo Tomassi');
+				},
+				onNavigationDone: function() {
+					expect(this.get('dummy')).toEqual('Rollo Tomassi');
+					done();
+				},
+				oncomplete: function() {
+					routerManager.navTo('/bar');
+				},
+				data: {
+					dummy: 'Rollo Tomassi'
+				}
+			}
+
+		BaseApp.extend(options);
+	});
+
 });
