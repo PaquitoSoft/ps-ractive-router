@@ -1,7 +1,7 @@
 engines:
-	eslint:
-		enabled: true
+  eslint:
+    enabled: true
 
 ratings:
-	paths:
-	- src/**
+   paths:
+   - src/**
