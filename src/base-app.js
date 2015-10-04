@@ -57,7 +57,7 @@ module.exports.extend = function createApp(options) {
 	appProperties.onNavigation = function _onNavigation(error, navigationContext) {
 		if (error) {
 			console.warn('App::onNavigation# Error navigating:', error);
-			this.showError(error.displayMessage || error.message);
+			this.showError(error.displayMessage || error.message, error);
 		} else {
 			this.set({
 				req: {
