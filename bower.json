@@ -1,23 +1,23 @@
 {
   "name": "ps-ractive-router",
-  "version": "1.0.0",
-  "homepage": "https://github.com/PaquitoSoft/ps-ractive-router",
-  "authors": [
-    "PaquitoSoft <paquitosoftware@gmail.com>"
-  ],
-  "description": "A router library for Ractive based projects",
+  "description": "A small router module to use with RactiveJS",
   "main": "src/index.js",
-  "moduleType": [
-    "amd",
-    "node",
-    "globals"
-  ],
-  "keywords": [
-    "ractive",
-    "router",
-    "library"
+  "authors": [
+    "PaquitoSoft"
   ],
   "license": "MIT",
+  "keywords": [
+    "js",
+    "ractive",
+    "ractivejs",
+    "router"
+  ],
+  "homepage": "https://github.com/PaquitoSoft/ps-ractive-router",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
   "ignore": [
     "node_modules",
     "bower_components",
