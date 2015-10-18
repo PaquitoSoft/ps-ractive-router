@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js",
     "postinstall": "node scripts/post-install.js",
-    "build": "./node_modules/.bin/webpack"
+    "build": "./node_modules/.bin/webpack && BUNDLE_TARGET=production ./node_modules/.bin/webpack"
   },
   "keywords": [
     "js",
