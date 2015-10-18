@@ -14,6 +14,7 @@ This module plays with three main components:
 If you use [requirejs](http://requirejs.org/), define the path to *Ractive* with capital 'R' (*Ractive*).
 
 There's a [DEMO REPO](https://github.com/PaquitoSoft/podcaster) where you can find a simple application implemented with this module to demonstrate how to use this library. <br/>
+The *master* branch uses this library globally. The *ractive-require* branch uses [requirejs](http://requirejs.org/) for dependency management.
 The application implemented in that repo can be visited live [HERE](http://podcaster.surge.sh).
 
 **IMPORTANT**: This module is intented to be used by users who already know [Ractive](http://www.ractivejs.org/).
